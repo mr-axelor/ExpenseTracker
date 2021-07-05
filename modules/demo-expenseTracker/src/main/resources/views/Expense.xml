@@ -47,7 +47,9 @@
 <view type="chart" name="expense-chart-donut"/>
 </action-view>
 
-  <form name="expense-form" canCopy="true" title="Address" model="com.axelor.expense.db.Expense" onNew="onNewFormViewExpense,checkThisActionRecord" >
+  <form readonlyIf = "price>10"
+
+  name="expense-form" canCopy="true" title="Address" model="com.axelor.expense.db.Expense" onNew="onNewFormViewExpense,checkThisActionRecord" >
     <panel title="Overview">
 <field name="category" canNew="true" canRemove="true" />
       <field name="expense" widget="boolean-switch">
@@ -61,8 +63,8 @@ Some help text goes here....
   <strong>{{record.price}} Rs </strong>
   <div ng-If="record.price>5000">This is too much man</div>
   ]]></viewer></field>
-      <field name="date1" />
-      <field name="paymentStatus"/>
+      <field name="date1" hideIf="price>10"/>
+      <field name="paymentStatus" />
     </panel>
         <panel-dashlet action="asd.asd123"/>
 
