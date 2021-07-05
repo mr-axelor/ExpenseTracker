@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.4.xsd">
+
+  <module name="expense" package="com.axelor.expense.db"  />
+  <sequence name="expense.expense.seq1" initial="1" increment="10" padding="5" prefix="EXP"/>
+  <entity name="Expense" cacheable="true" repository="abstract">
+<many-to-many name= "category" ref="Category" />
+    <string name="expense" required="true" max="255" />
+     <integer name="price" required="true" />
+     <date name="date1" required="true"/>
+     <string name="paymentStatus" selection="expense.payment.selection"/>
+     <string name="checkSeqCol" sequence="expense.expense.seq1"/>
+
+         <finder-method name="findByCategory" using="String:category"  filter="self.category[].categoryName = :category" />
+
+  </entity>
+
+</domain-models>

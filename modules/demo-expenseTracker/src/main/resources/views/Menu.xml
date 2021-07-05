@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+  http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
+
+  <menuitem name="menu-expense-book"
+    title="Expense Keeper" icon="fa-anchor" order="-70" icon-background="red" top="true" />
+
+  <menuitem name="menu-expense-friends"
+    parent="menu-expense-book"
+    title="All Expense"
+    action="expense.all" order="1" top="true"/>
+
+
+  <menuitem tag-count="true" name="menu-category-friends"
+    parent="menu-expense-book"
+    title="All Category"
+    action="category.all" order="2"/>
+
+    <menuitem  name="menu-extra-expense" icon="fa-anchor" icon-background="red" title="extra menu just for checking" order="3" parent="menu-expense-book"></menuitem>
+
+    <menuitem name="menu-extra-extra-expense" icon="fa-dog" icon-background="green" title="extra extra menu just for checking" order="3"
+    parent="menu-extra-expense"></menuitem>
+<menuitem title="menu-expense-tree" name="menu-expense-tree" parent="menu-expense-book" action="awq"/>
+  <action-view name="awq" title="som">
+    <view type="tree" name="expense-tree"/>
+  </action-view>
+  <action-view name="expense.all"
+    title="All expenses"
+    model="com.axelor.expense.db.Expense">
+    <view type="grid" name="expense-grid"/>
+    <view type="form" name="expense-form"/>
+    <view type="kanban" name="expense-kanban"/>
+        <view type="calendar" name="expense-calendar" />
+<view type="cards" name="expense-cards" />
+<view type="chart" name="expense-charts"/>
+<view type="custom" name="expense-custom"/>
+<view-param name="search-filters" value="filter-expense"/>
+    <context name="json-enhance" expr="true"/>
+  </action-view>
+
+    <action-view name="category.all"
+    title="Contacts"
+    model="com.axelor.expense.db.Category">
+    <view type="grid" name="category-grid"/>
+    <view type="form" name="category-form"/>
+  </action-view>
+
+</object-views>

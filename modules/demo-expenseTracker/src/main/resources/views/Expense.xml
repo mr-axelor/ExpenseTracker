@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
+
+
+  <selection name="expense.payment.selection">
+    <option value="yet to pay">Yet to pay</option>
+    <option value="paying">Paying</option>
+    <option value="paid">Paid</option>
+  </selection>
+
+
+  <grid name="expense-grid" editable="true" customSearch="true" freeSearch="price" title="Address List" model="com.axelor.expense.db.Expense" groupBy="price">
+
+    <field name="expense" />
+    <field name="price" />
+    <field name="date1" />
+  </grid>
+    <search-filters name="filter-expense" model="com.axelor.expense.db.Expense" title="Filter expense Orders">
+    <filter title="Very high">
+      <domain>self.price > 1000</domain>
+    </filter>
+    <filter title="Very low">
+      <domain>self.price &lt; 100 </domain>
+    </filter>
+
+  </search-filters>
+
+
+<action-view name="just-the-chart" title="">
+<view type="chart" name="expense-charts"/>
+</action-view>
+
+<action-view name="just-the-custom-view" title="custom-view-practise-jpql">
+<view type="custom" name="expense-custom" />
+</action-view>
+
+<action-view name="just-the-custom-view-rpc" title="custom-view-practise-rpc">
+<view type="custom" name="expense-custom-using-rpc" />
+</action-view>
+
+<action-view name="just-the-chart-line" title="">
+<view type="chart" name="expense-chart-line"/>
+</action-view>
+<action-view name="just-the-chart-pie" title="">
+<view type="chart" name="expense-chart-donut"/>
+</action-view>
+
+  <form name="expense-form" canCopy="true" title="Address" model="com.axelor.expense.db.Expense" onNew="onNewFormViewExpense,checkThisActionRecord" >
+    <panel title="Overview">
+<field name="category" canNew="true" canRemove="true" />
+      <field name="expense" widget="boolean-switch">
+      </field><help css="alert-info">
+<![CDATA[
+Some help text goes here....
+]]>
+</help>
+
+      <field name="price" onChange="onChangeFormViewExpensePrice" onSelect="onSelectFormViewExpensePriceActionMethod">  <viewer><![CDATA[
+  <strong>{{record.price}} Rs </strong>
+  <div ng-If="record.price>5000">This is too much man</div>
+  ]]></viewer></field>
+      <field name="date1" />
+      <field name="paymentStatus"/>
+    </panel>
+        <panel-dashlet action="asd.asd123"/>
+
+        <panel-dashlet action="just-the-chart" />
+        <panel-dashlet action="just-the-chart-line" />
+        <panel-dashlet action="just-the-chart-pie" />
+        <panel-dashlet action="just-the-custom-view" />
+        <panel-dashlet action="just-the-custom-view-rpc" />
+        
+
+        <panel>        <button name="expenseExport" title="Export" showIf="id" onClick="export.expense.expense"/>
+        </panel>
+
+  </form>
+
+<action-export name="export.expense.expense" output="${expense}/${date}${time}" download="true">
+    <export name="${expense}.xml" template="data-export/export-expense.st"/>
+
+</action-export>
+
+  <action-method name="onSelectFormViewExpensePriceActionMethod">
+  <call class="com.axelor.expense.controller.ExpenseController" method="checkMove()"/>
+</action-method>
+<action-view name="asd.asd123" title="sometitle" model="com.axelor.expense.db.Expense">
+<view type="grid" name="expense-grid" />
+<domain>self.price>100</domain>
+</action-view>
+<action-attrs name="onNewFormViewExpense">
+  <attribute for="date1" name="hidden" expr="true" />
+  <attribute for="expense" name="value" expr="500" />
+</action-attrs>
+<action-attrs name="onChangeFormViewExpensePrice">
+  <attribute for="date1" name="hidden" expr="false" />
+</action-attrs>
+<action-record name="checkThisActionRecord" model="com.axelor.expense.db.Expense">
+<field name="category" expr="action:setadefaultcat"/>
+</action-record>
+<action-record name="setadefaultcat" model="com.axelor.expense.db.Category" search="('self.categoryName = ?1','NewCat')">
+<field name="categoryName" expr="NewCat"/>
+</action-record>
+
+<calendar name="expense-calendar" mode="day"
+  title="Expense tasks"
+  model="com.axelor.expense.db.Expense"
+  colorBy="price"
+  eventStart="date1" >
+  <field name="price"/>
+<field name="expense"/>
+</calendar>
+
+
+  <cards name="expense-cards" title="expense cards" model="com.axelor.expense.db.Expense" orderBy="-price">
+    <field name="expense" />
+    <field name="price" />
+    <field name="date1"/>
+    <field name="category" />
+    <template><![CDATA[
+    <div class="span4 ">
+      <strong> {{date1}}</strong>
+    </div>
+      <div class="span8">
+              <div ng-if="hasImage">
+              {{expense}}
+              </div>
+
+          <strong>{{address.street}} {{expense}}</strong><br>
+          <abbr ng-if="phone" title="Phone">P:</abbr> {{price}}<br>
+          <abbr ng-if="email" title="Email">E:</abbr> {{category[0].categoryName}}<br>
+      </div>
+    ]]></template>
+  </cards>
+
+
+
+<kanban name="expense-kanban" title="expenseTasks" model="com.axelor.expense.db.Expense"
+  columnBy="paymentStatus"  onNew="expense.kanban.on.new" onMove="expense.kanban.on.move"  sequenceBy = "price"  limit="10">
+  <field name="expense"/>
+  <field name="paymentStatus"/>
+  <field name="price"/>
+  <field name="date1"/>
+  <template><![CDATA[
+  <h4>{{expense}}</h4>
+  <h6>{{price}}</h6>
+  ]]></template>
+</kanban>
+
+
+  <action-record name="expense.kanban.on.new" model="com.axelor.expense.db.Expense">
+    <field name="expense" expr="madhu"/>
+    <field name="date1" expr="#{__time__}"/>
+    <field name="price" expr="#{_value}"/>
+  </action-record>
+  <action-method name="expense.kanban.on.move">
+      <call class="com.axelor.expense.controller.ExpenseController" method="checkMove()"/>
+    </action-method>
+
+
+
+  <tree name="expense-tree"  title="expense tree">
+  <!-- define tree columns -->
+  <column name="categoryName" type="string" />
+  <column name="expense" type="string"  />
+  <!-- define 1st level node -->
+  <node model="com.axelor.expense.db.Category" onClick="expense.add.fromtree">
+    <field name="categoryName" as="categoryName" />
+  </node>
+
+
+    <node model="com.axelor.expense.db.Expense" parent="category"
+    draggable="true" onClick="expense.add.fromtreefromnode">
+    <field name="expense" as="categoryName" />
+    <field name="price" as="price" />
+  </node>
+</tree>
+
+
+
+    <action-view name="expense.add.fromtree" title="tiredofnaming" model="com.axelor.expense.db.Category">
+    <view type="grid" name="category-grid"/>
+    <view type="form" name="category-form"/>
+    <domain>self.id = :id</domain>
+    <context name="id" expr="eval: id"/>
+    <context name="_showSingle" expr="true"/>
+  </action-view>
+
+      <action-view name="expense.add.fromtreefromnode" title="tiredofnamingseriously" model="com.axelor.expense.db.Expense">
+    <view type="grid" name="expense-grid"/>
+    <view type="form" name="expense-form"/>
+    <domain>self.id = :id</domain>
+    <context name="id" expr="eval: id"/>
+    <context name="_showSingle" expr="true"/>
+  </action-view>
+
+</object-views>
