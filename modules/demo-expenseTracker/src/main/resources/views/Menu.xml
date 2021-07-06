@@ -12,7 +12,17 @@
     title="All Expense"
     action="expense.all" order="1" top="true"/>
 
-
+  <menuitem name="menu-myexpense-friends"
+    parent="menu-expense-book"
+    title="My Expense"
+    action="myexpense.all" order="1" top="true"/>
+    
+  <menuitem name="menu-expense-configfriends"
+    parent="menu-expense-book"
+    title="All ExpenseConfig"
+    action="expenseconfig.all" />
+    
+    
   <menuitem tag-count="true" name="menu-category-friends"
     parent="menu-expense-book"
     title="All Category"
@@ -46,5 +56,17 @@
     <view type="grid" name="category-grid"/>
     <view type="form" name="category-form"/>
   </action-view>
+  
+  
+<action-view name="expenseconfig.all" title="configexpense" model="com.axelor.expense.db.ExpenseConfig">
+<view type="grid" name="expenseConfig-grid" />
+<view type="form" name="expenseConfig-form" />
+</action-view>
+
+<action-view name="myexpense.all" title="My expenses" model="com.axelor.expense.db.Expense">
+<view type="grid" name="myexpense-grid" />
+<view type="form" name="myexpense-form" />
+<domain>self.user = :__user__</domain>
+</action-view>
 
 </object-views>

@@ -9,7 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import com.axelor.db.JpaSupport;
+import com.axelor.expense.db.Category;
 import com.axelor.expense.db.Expense;
+import com.axelor.expense.db.ExpenseConfig;
 import com.axelor.expense.db.repo.ExpenseRepository;
 import com.axelor.expense.service.PractiseRpcService;
 import com.axelor.meta.CallMethod;
@@ -74,4 +76,20 @@ public class ExpenseController extends JpaSupport {
     
    
   }
+  
+  
+  public void setFromExpenseConfig(ActionRequest request, ActionResponse response) {
+    EntityManager em = getEntityManager();
+    Expense ec = request.getContext().asType(Expense.class);
+   
+    Query q1 = em.createQuery("select self.todayDate as todayDate, self.defaultCategory as defaultCategory from ExpenseConfig self where self.user =:user").setParameter("user", request.getUser());
+    Object[] a = (Object[])q1.getSingleResult();
+    List<Category> catList = new ArrayList<Category>();
+    
+    Category cat = (Category)a[1];
+    catList.add(cat);
+    response.setValue("category", catList);
+    response.setValue("date1", a[0]);
+  }
+  
 }

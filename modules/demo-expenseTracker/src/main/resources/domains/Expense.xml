@@ -7,6 +7,8 @@
   <sequence name="expense.expense.seq1" initial="1" increment="10" padding="5" prefix="EXP"/>
   <entity name="Expense" cacheable="true" repository="abstract">
 <many-to-many name= "category" ref="Category" />
+      <many-to-one name="user" column="user_id" ref="com.axelor.auth.db.User" />
+
     <string name="expense" required="true" max="255" />
      <integer name="price" required="true" />
      <date name="date1" required="true"/>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
+
+  
+  <form
+  name="expenseConfig-form"  title="ExpenseConfig" model="com.axelor.expense.db.ExpenseConfig" onNew="onNewFormViewExpenseConfig" >
+<field name="user" readonly="true" />
+<field name="defaultCategory" canNew="true" canRemove="true"/>
+<field name="todayDate" />
+
+    </form>
+  <grid  name="expenseConfig-grid" title="expenseconfig" model="com.axelor.expense.db.ExpenseConfig" 
+  
+  >
+  <field name="todayDate" />
+  </grid>
+  <action-attrs name="onNewFormViewExpenseConfig">
+  <attribute for="todayDate" name="value" expr="eval: __date__" />
+  <attribute for="user" name="value" expr="eval: __user__" />
+  </action-attrs>
+  
+  
+  
+  
+   <grid  name="myexpense-grid" title="myexpense" model="com.axelor.expense.db.Expense" 
+  
+  >
+  <field name="expense" />
+  <field name="price" />
+  <field name="date1" />
+  </grid>
+  
+  </object-views>

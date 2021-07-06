@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.4.xsd">
+
+  <module name="expense" package="com.axelor.expense.db" />
+
+  <entity name="ExpenseConfig" cacheable="false">
+      <one-to-one name="user" column="user_id" ref="com.axelor.auth.db.User" />
+    <many-to-one name= "defaultCategory" ref="Category"  />
+    <date name="todayDate"/>
+  </entity>
+
+</domain-models>
