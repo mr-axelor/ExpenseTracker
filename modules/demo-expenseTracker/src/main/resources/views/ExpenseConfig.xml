@@ -8,11 +8,16 @@
   name="expenseConfig-form"  title="ExpenseConfig" model="com.axelor.expense.db.ExpenseConfig" onNew="onNewFormViewExpenseConfig" >
 <field name="user" readonly="true" />
 <field name="defaultCategory" canNew="true" canRemove="true"/>
-<field name="todayDate" />
+<field name="todayDate" onChange="check-past-date"/>
     <field name="allowedCategories" canEdit="true" canSelect="true" canNew="true">
     </field>
 
     </form>
+    <action-condition name="check-past-date">
+
+  <check field="todayDate" if="todayDate &lt; __date__"
+    error="Cant be past."/>
+</action-condition>
   <grid  name="expenseConfig-grid" title="expenseconfig" model="com.axelor.expense.db.ExpenseConfig" 
   
   >
