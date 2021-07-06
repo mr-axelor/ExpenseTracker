@@ -12,10 +12,13 @@
 
 
   <grid name="expense-grid" editable="true" customSearch="true" freeSearch="price" title="Address List" model="com.axelor.expense.db.Expense" groupBy="price">
-
+<hilite if="paymentStatus == 'paid' " color="green"/>
+<hilite if="paymentStatus == 'yet to pay' " color="red"/>
+<hilite if="paymentStatus == 'paying' " color="blue"/>
     <field name="expense" />
     <field name="price" />
     <field name="date1" />
+    <field name="paymentStatus" />
   </grid>
     <search-filters name="filter-expense" model="com.axelor.expense.db.Expense" title="Filter expense Orders">
     <filter title="Very high">
