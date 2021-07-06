@@ -9,12 +9,15 @@
 <field name="user" readonly="true" />
 <field name="defaultCategory" canNew="true" canRemove="true"/>
 <field name="todayDate" />
+    <field name="allowedCategories" canEdit="true" canSelect="true" canNew="true">
+    </field>
 
     </form>
   <grid  name="expenseConfig-grid" title="expenseconfig" model="com.axelor.expense.db.ExpenseConfig" 
   
   >
   <field name="todayDate" />
+  <field name="allowedCategories" ></field>
   </grid>
   <action-attrs name="onNewFormViewExpenseConfig">
   <attribute for="todayDate" name="value" expr="eval: __date__" />
@@ -30,6 +33,7 @@
   <field name="expense" />
   <field name="price" />
   <field name="date1" />
+  
   </grid>
   
   </object-views>
