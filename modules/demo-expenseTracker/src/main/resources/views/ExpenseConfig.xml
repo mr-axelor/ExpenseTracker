@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
 
   
-  <form
+  <form onSave="expenseconfigvalidate"
   name="expenseConfig-form"  title="ExpenseConfig" model="com.axelor.expense.db.ExpenseConfig" onNew="onNewFormViewExpenseConfig" >
 <field name="user" readonly="true" />
 <field name="defaultCategory" canNew="true" canRemove="true"/>
@@ -18,6 +18,9 @@
   <check field="todayDate" if="todayDate &lt; __date__"
     error="Cant be past."/>
 </action-condition>
+<action-validate name="expenseconfigvalidate">
+  <info message="You have used a future date.. Unless you are very sure of it, it is advised to change it to today's date" if = "todayDate &gt; __date__" />
+</action-validate>
   <grid  name="expenseConfig-grid" title="expenseconfig" model="com.axelor.expense.db.ExpenseConfig" 
   
   >
