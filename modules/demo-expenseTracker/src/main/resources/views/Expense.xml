@@ -104,7 +104,6 @@ Some help text goes here....
 
 <action-attrs  name="allowOnlyAllowedCategory">
 <attribute for="category" name="domain" expr="self.id in (select cf.id from ExpenseConfig c inner join c.allowedCategories as cf where c.user = :user)" />
-<attribute for="category" name="context" expr="eval: __user__" />
 </action-attrs>
 <action-method name="checkThisActionRecord" model="com.axelor.expense.db.Expense">
   <call class="com.axelor.expense.controller.ExpenseController" method="setFromExpenseConfig"/>
