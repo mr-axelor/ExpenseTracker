@@ -68,7 +68,7 @@ Some help text goes here....
   ]]></viewer></field>
   <field name="user" readonly="true" />
       <field name="date1" hideIf="price>10"/>
-      <field name="paymentStatus" />
+      <field name="paymentStatus" selection-in="['paid','paying']" />
     </panel>
         <panel-dashlet action="asd.asd123"/>
 
@@ -106,7 +106,7 @@ Some help text goes here....
 </action-attrs>
 
 <action-attrs  name="allowOnlyAllowedCategory">
-<attribute for="category" name="domain" expr="self.id in (select cf.id from ExpenseConfig c inner join c.allowedCategories as cf where c.user = :user)" />
+ <attribute for="category" name="domain" expr="self.id in (select cf.id from ExpenseConfig c inner join c.allowedCategories as cf where c.user = :user)" /> 
 </action-attrs>
 <action-method name="checkThisActionRecord" model="com.axelor.expense.db.Expense">
   <call class="com.axelor.expense.controller.ExpenseController" method="setFromExpenseConfig"/>
