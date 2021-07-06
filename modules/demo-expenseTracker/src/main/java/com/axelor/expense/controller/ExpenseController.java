@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.axelor.auth.AuthUtils;
 import com.axelor.db.JpaSupport;
 import com.axelor.expense.db.Category;
 import com.axelor.expense.db.Expense;
@@ -85,7 +86,7 @@ public class ExpenseController extends JpaSupport {
     //Expense ec = request.getContext().asType(Expense.class);
    
     //Query q1 = em.createQuery("select self.todayDate as todayDate, self.defaultCategory as defaultCategory from ExpenseConfig self where self.user =:user").setParameter("user", request.getUser());
-    ExpenseConfig ec = Beans.get(ExpenseConfigRepository.class).all().filter("self.user = ?", request.getUser()).fetchOne();
+    ExpenseConfig ec = Beans.get(ExpenseConfigRepository.class).all().filter("self.user = ?", AuthUtils.getUser()).fetchOne();
 
     //Object[] a = (Object[])q1.getSingleResult();
     List<Category> catList = new ArrayList<Category>();
